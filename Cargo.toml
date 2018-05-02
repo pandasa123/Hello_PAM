@@ -1,0 +1,13 @@
+[package]
+name = "hello_pam"
+version = "1.0.0"
+
+[lib]
+name = "hello_pam"
+crate-type = ["dylib"]
+
+[dependencies]
+libc = "0.2.0"
+openssl = "0.9.17"
+toml = "0.4"
+uuid = { version = "0.5", features = ["v4"] }
