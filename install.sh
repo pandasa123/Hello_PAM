@@ -106,6 +106,7 @@ if [ ! -e "uninstall.sh" ] || prompt_yn "'uninstall.sh' already exists. Overwrit
   sudo rm -rf /etc/hello_pam
   sudo rm /lib/x86_64-linux-gnu/security/hello_pam.so
   rm -rf ${hello_pam_WINPATH}
+  grep -v "auth    sufficient    hello_pam.so" /etc/pam.d/sudo > temp; mv temp /etc/pam.d/sudo
 EOS
   chmod +x uninstall.sh
 else
