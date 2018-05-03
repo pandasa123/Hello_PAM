@@ -7,13 +7,13 @@ facial recognition, fingerprint authentication, PIN, and userspace password are 
 
 Hello PAM! is entirely built around Linux Pluggable Authentication Module and WSL Interoperatability. `sudo` calls the PAM module, PAM sends the user private RSA through `WSLENV`, Windows Hello creates a public RSA, and PAM compares it to the existing public RSA to authenticate. We span across WSL, WSLENV, and Windows-Environment to authenticate PAM via Windows Hello
 
-![Architecture](https://gitlab.eecs.umich.edu/pandasa/Hello_PAM/raw/master/Images/Architecture.jpg)
+![Architecture](https://gitlab.eecs.umich.edu/pandasa/Hello_PAM/raw/master/Images/Architecture.png)
 
 ## Installation and Configuration
 
 ### Installation
 
-![Installation Process](https://gitlab.eecs.umich.edu/pandasa/Hello_PAM/raw/master/Images/Installation.jpg)
+![Installation Process](https://gitlab.eecs.umich.edu/pandasa/Hello_PAM/raw/master/Images/Installation.png)
 
 $ `git clone https://gitlab.eecs.umich.edu/pandasa/Hello_PAM.git`
 
