@@ -9,9 +9,7 @@ Hello PAM! is entirely built around Linux Pluggable Authentication Module and WS
 
 ![Architecture](https://gitlab.eecs.umich.edu/pandasa/Hello_PAM/raw/master/Images/Architecture.png)
 
-## Installation and Configuration
-
-### Installation
+## Installation
 
 ![Installation Process](https://gitlab.eecs.umich.edu/pandasa/Hello_PAM/raw/master/Images/Installation.png)
 
@@ -23,7 +21,7 @@ $ `chmod +x install.sh`
 
 $ `./install.sh`
 
-## Build
+## Building from source
 
 This following step depends on the current Visual Studio version but should give you an idea of where to look.
 We're adding MSBuild.exe to WSL's path
