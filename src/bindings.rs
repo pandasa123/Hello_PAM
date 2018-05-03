@@ -346,7 +346,7 @@ extern "C" {
         flags: ::std::os::raw::c_int,
     ) -> ::std::os::raw::c_int;
 
-    pub fn pam_acct_mgmt(
+    pub fn pam_manage_account(
         pamh: *mut pam_handle_t,
         flags: ::std::os::raw::c_int,
     ) -> ::std::os::raw::c_int;
@@ -361,7 +361,7 @@ extern "C" {
         flags: ::std::os::raw::c_int,
     ) -> ::std::os::raw::c_int;
 
-    pub fn pam_chauthtok(
+    pub fn pam_authtoken(
         pamh: *mut pam_handle_t,
         flags: ::std::os::raw::c_int,
     ) -> ::std::os::raw::c_int;

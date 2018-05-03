@@ -80,6 +80,7 @@ echo_stage "[4/7] Creating the config files of WSL-Hello-sudo..."
 set -x
 sudo mkdir -p /etc/hello_pam/
 set +x
+
 if [ ! -e "/etc/hello_pam/config" ] || prompt_yn "'/etc/hello_pam/config' already exists. Overwrite it? [y/N]" "n" ; then
   set -x
   sudo touch /etc/hello_pam/config
@@ -87,6 +88,7 @@ if [ ! -e "/etc/hello_pam/config" ] || prompt_yn "'/etc/hello_pam/config' alread
 else
   echo "skip creation of '/etc/hello_pam/config'"
 fi
+
 echo "Please authenticate yourself now to create a credential for '$USER' and '$WINUSER' pair."
 KEY_ALREADY_EXIST_ERR=170
 set -x

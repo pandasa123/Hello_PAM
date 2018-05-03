@@ -22,7 +22,7 @@ use uuid::Uuid;
 
 
 #[no_mangle]
-pub fn pam_sm_authenticate(
+pub fn pam_authenticate(
     pamh: *mut pam_handle_t,
     flags: c_int,
     _: c_int,
@@ -147,13 +147,13 @@ impl fmt::Display for HelloAuthenticationError {
             HelloAuthenticationError::ConfigError(ref err) => write!(f, "config error; {}", err),
             HelloAuthenticationError::PublicKeyFileError(ref err) => match err.kind() {
                 io::ErrorKind::NotFound => {
-                    write!(f, "cannot find the credential public key for this user")
+                    write!(f, "cannot find user public key")
                 }
                 _ => write!(f, "{}", err),
             },
             HelloAuthenticationError::Io(ref err) => write!(f, "{}", err),
             HelloAuthenticationError::InvalidPublicKey(_) => {
-                write!(f, "the pem file of the public key is invalid")
+                write!(f, "public key is invalid")
             }
             HelloAuthenticationError::AuthenticatorLaunchError(ref err) => {
                 write!(f, "cannot launch Windows Hello; {}", err)
@@ -166,7 +166,7 @@ impl fmt::Display for HelloAuthenticationError {
             }
             HelloAuthenticationError::SignAuthenticationFail => write!(
                 f,
-                "the result of signature verification of the credential is failure"
+                "signature verification failed"
             ),
             ref err => write!(f, "internal error; {:?}", err),
         }
@@ -175,12 +175,12 @@ impl fmt::Display for HelloAuthenticationError {
 
 fn authenticate_via_hello(pamh: *mut pam_handle_t) -> Result<i32, HelloAuthenticationError> {
     let user_name = get_user(pamh, None).map_err(|e| HelloAuthenticationError::GetUserError(e))?;
-    let credential_key_name = format!("hello_pam_{}", user_name);
+    let credentialFile = format!("hello_pam_{}", user_name);
 
     let mut hello_public_key_file =
         File::open(format!(
             "/etc/hello_pam/public_keys/{}.pem",
-            credential_key_name
+            credentialFile
         )).map_err(|io| HelloAuthenticationError::PublicKeyFileError(io))?;
     let mut key_str = String::new();
     hello_public_key_file.read_to_string(&mut key_str)?;
@@ -192,8 +192,6 @@ fn authenticate_via_hello(pamh: *mut pam_handle_t) -> Result<i32, HelloAuthentic
     let auth_res;
     let challenge_tmpfile_path = &format!("/tmp/{}", challenge);
     {
-        // Since there seems to be a bug that C# applications cannot read from pipes on WSL,
-        // we create a temporary file to redirect
         let mut challenge_tmpfile = OpenOptions::new()
             .write(true)
             .read(true)
@@ -205,7 +203,7 @@ fn authenticate_via_hello(pamh: *mut pam_handle_t) -> Result<i32, HelloAuthentic
 
         let authenticator_path = get_authenticator_path()?;
         let authenticator = Command::new(&authenticator_path)
-            .arg(credential_key_name)
+            .arg(credentialFile)
             .current_dir("/mnt/c")
             .stdin(challenge_tmpfile_in)
             .stdout(Stdio::piped())
@@ -219,7 +217,7 @@ fn authenticate_via_hello(pamh: *mut pam_handle_t) -> Result<i32, HelloAuthentic
     fs::remove_file(challenge_tmpfile_path)?;
 
     match auth_res.status.code() {
-        Some(code) if code == 0 => { /* Success */ }
+        Some(code) if code == 0 => {}
         Some(_) => {
             return Err(HelloAuthenticationError::HelloAuthenticationFail(
                 String::from_utf8(auth_res.stdout).unwrap_or("invalid utf8 output".to_string()),

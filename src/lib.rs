@@ -14,7 +14,7 @@ use bindings::*;
 
 #[no_mangle]
 #[allow(unused_variables)]
-pub fn pam_sm_setcred(
+pub fn pam_setcred(
     pamh: *mut pam_handle_t,
     flags: ::std::os::raw::c_int,
     argc: ::std::os::raw::c_int,
@@ -25,7 +25,7 @@ pub fn pam_sm_setcred(
 
 #[no_mangle]
 #[allow(unused_variables)]
-pub fn pam_sm_acct_mgmt(
+pub fn pam_manage_account(
     pamh: *mut pam_handle_t,
     flags: ::std::os::raw::c_int,
     argc: ::std::os::raw::c_int,
@@ -36,7 +36,7 @@ pub fn pam_sm_acct_mgmt(
 
 #[no_mangle]
 #[allow(unused_variables)]
-pub fn pam_sm_open_session(
+pub fn pam_open_session(
     pamh: *mut pam_handle_t,
     flags: ::std::os::raw::c_int,
     argc: ::std::os::raw::c_int,
@@ -47,7 +47,7 @@ pub fn pam_sm_open_session(
 
 #[no_mangle]
 #[allow(unused_variables)]
-pub fn pam_sm_close_session(
+pub fn pam_close_session(
     pamh: *mut pam_handle_t,
     flags: ::std::os::raw::c_int,
     argc: ::std::os::raw::c_int,
@@ -58,7 +58,7 @@ pub fn pam_sm_close_session(
 
 #[no_mangle]
 #[allow(unused_variables)]
-pub fn pam_sm_chauthtok(
+pub fn pam_authtoken(
     pamh: *mut pam_handle_t,
     flags: ::std::os::raw::c_int,
     argc: ::std::os::raw::c_int,
