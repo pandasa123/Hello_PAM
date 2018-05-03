@@ -19,7 +19,7 @@ $ `cd Hello_PAM`
 
 $ `chmod +x install.sh`
 
-$ `./install.sh`
+$ `sudo ./install.sh`
 
 ## Building from source
 

@@ -120,7 +120,7 @@ set +x
 echo_stage "[6/7] Configuring /etc/pam.d/sudo...Will need sudo!"
 set -x
 
-sudo sed 's/.*session    required   pam_env.so readenv=1 user_readenv=0.*/auth    sufficient    hello_pam.so\n&/' /etc/pam.d/sudo > /etc/pam.d/sudo
+sudo sed -i 's/.*session    required   pam_env.so readenv=1 user_readenv=0.*/auth    sufficient    hello_pam.so\n&/' /etc/pam.d/sudo
 
 set +x
 echo_stage "[7/7] Finished installation and configuration! Reload shell and try `sudo whoami`"
