@@ -23,10 +23,11 @@ $ `sudo ./install.sh`
 
 ## Building from source
 
-This following step depends on the current Visual Studio version but should give you an idea of where to look.
-We're adding MSBuild.exe to WSL's path
+$ `find "/mnt/c/Program Files (x86)/Microsoft Visual Studio" -name "MSBuild.exe" | grep -v "amd" | sed 's/ /\\ /g'` 
 
-$ `export PATH=$PATH:/mnt/c/Program\ Files\ \(x86\)/Microsoft\ Visual\ Studio/2017/Community/MSBuild/15.0/Bin/` 
+COPY and PASTE below
+
+$ `export PATH=$PATH:[PASTE HERE]` 
 
 $ `chmod +x packageinstall.sh`
 
